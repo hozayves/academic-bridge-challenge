@@ -1,5 +1,4 @@
 import { RiMoonLine } from "react-icons/ri";
-import { HiOutlineSun } from "react-icons/hi";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 

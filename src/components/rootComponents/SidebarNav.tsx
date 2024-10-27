@@ -7,8 +7,14 @@ import { FaPlus } from "react-icons/fa6";
 
 export const SidebarNav: FC = () => {
     return (
-        <div className="bg-white h-screen w-[75px] sticky top-0 left-0 flex flex-col border border-r-gray-200">
-            <div className=" h-16 py-4 flex justify-center items-center">
+        <div className="bg-white h-screen w-[75px] 
+        
+        
+        
+        sticky top-0 left-0 flex flex-col border border-r-gray-200">
+            <div className=" h-16 py-4 flex justify-center 
+            
+            items-center">
                 <Link to="/" className="">
                     <IoLogoSlack className="w-[30px] h-[30px] md:w-[40px] md:h-[40px]" />
                 </Link>
