@@ -4,11 +4,11 @@ import { TopNav, Sidebar } from "../components";
 
 export const RootLayout: FC = () => {
     return (
-        <div className="flex bg-slate-100">
+        <div className="flex w-full h-screen justify- bg-slate-100">
             <Sidebar />
-            <div className="flex flex-col w-full bg-violet-300">
+            <div className="flex flex-col w-full">
                 <TopNav />
-                <main className="bg-violet-200">{<Outlet />}</main>
+                <main className="bg-gray-100 overflow-auto">{<Outlet />}</main>
             </div>
         </div>
     )

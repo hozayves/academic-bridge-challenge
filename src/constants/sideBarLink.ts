@@ -3,10 +3,12 @@ import { LuMessageSquare } from "react-icons/lu";
 import { LuClipboardList } from "react-icons/lu";
 import { HiOutlineFolderRemove } from "react-icons/hi";
 import { BsCupStraw } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { MdOutlineSettings } from "react-icons/md";
 
 type SideBarLink = {
     path: string;
-    icon: React.ComponentType<{ className?: string }>;
+    icon: React.ComponentType<{ className?: string, size?: number }>;
     name: string;
 }
 
@@ -37,3 +39,16 @@ export const sideBarLinks: SideBarLink[] = [
         name: "About"
     }
 ];
+
+export const userLinks: SideBarLink[] = [
+    {
+        path: "/settings",
+        icon: MdOutlineSettings,
+        name: "Settings"
+    },
+    {
+        path: "/profile",
+        icon: FiUser,
+        name: "Profile"
+    }
+]
