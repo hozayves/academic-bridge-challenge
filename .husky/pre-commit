@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-#Run tests
-npm test
-
+echo "🚀 Starting pre-commit checks..."
 #Run lint-staged
-npx linted-staged
+npx lint-staged
 
-#Run linter
-npm lint
+echo "✅ Pre-commit checks passed! Proceeding to tests..."
+#Run tests in non-watch mode
+npm test --run
+echo "✅ Tests passed! Pre-commit checks completed successfully."

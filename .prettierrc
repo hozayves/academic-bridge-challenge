@@ -5,9 +5,8 @@
     "trailingComma": "es5",
     "arrowParens": "always",
     "tabWidth": 2,
-    "useTabs": false,
-    "endOfLine": "lf",
-    "bracketSameLine": false,
-    "proseWrap": "always",
-    "quoteProps": "consistent"
+    "bracketSameLine": true,
+    "jsxSingleQuote": false,
+    "bracketSpacing": true,
+    "singleAttributePerLine": false
 }

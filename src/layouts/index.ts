@@ -1,1 +1,1 @@
-export * as rootLayout from "./RootLayout";
+export * as rootLayout from "./RootLayout"
