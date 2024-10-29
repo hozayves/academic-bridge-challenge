@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 
 export default function TopNav() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Check localStorage on initial render
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme")
       return savedTheme === "dark"
@@ -15,7 +14,6 @@ export default function TopNav() {
   })
 
   useEffect(() => {
-    // Update localStorage and document class when theme changes
     localStorage.setItem("theme", isDarkMode ? "dark" : "light")
     if (isDarkMode) {
       document.documentElement.classList.add("dark")
@@ -25,7 +23,7 @@ export default function TopNav() {
   }, [isDarkMode])
 
   return (
-    <div className="bg-light dark:bg-dark h-16 w-full sticky top-0 flex justify-between md:gap-5 gap-2 items-center p-5 px-2 md:px-5 py-8 text-dark dark:text-light">
+    <div className="bg-light dark:bg-dark h-16 w-full sticky top-0 flex justify-between md:gap-5 gap-2 items-center p-5 px-2 md:px-5 py-8 text-dark dark:text-light dark:border-b-1 dark:border-dark-border dark:border-b">
       <div className="rounded-xl flex bg-gray-100 p-2 px-3 w-64 md:w-80 h-9 justify-center items-center dark:bg-dark-bg">
         <input
           type="text"

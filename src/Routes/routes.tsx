@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import { rootLayout } from "../layouts"
+import Todo from "../pages/Todo"
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -13,9 +14,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "todo",
-        element: (
-          <div className="text-3xl font-bold text-center text-black dark:text-red-500">Todo</div>
-        ),
+        element: <Todo />,
       },
       {
         path: "*",
