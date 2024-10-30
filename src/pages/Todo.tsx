@@ -12,6 +12,10 @@ import { NavLink } from "react-router-dom"
 import imagex from "../assets/images/erick.jpeg"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { AiOutlineMessage } from "react-icons/ai"
+import { tasksStore } from "../zustand"
+import { useGetTodo } from "../service/index"
+import { FiEdit2 } from "react-icons/fi"
+import { RiDeleteBinLine } from "react-icons/ri"
 
 // Add this type above the component
 type AccessLevel = "limited" | "private" | "public"
@@ -21,94 +25,40 @@ export default function Todo() {
   const [access, setAccess] = useState<AccessLevel>("limited")
   // Add new state for active tab
   const [activeTab, setActiveTab] = useState("all")
+  const tasks = tasksStore((state) => state.tasks)
+  const { isLoading, error } = useGetTodo() // Add this to trigger the API fetch
 
-  // Add mock counts (replace with actual data later)
-  const taskCounts = {
-    all: 12,
-    todo: 2,
-    inProgress: 4,
-    completed: 3,
+  // Add loading state
+  if (isLoading) {
+    return <div>Loading...</div>
   }
-  const tasks = [
-    {
-      id: 1,
-      title: "Task 1",
-      description: "Description 1",
-      status: "To Do",
-    },
-    {
-      id: 2,
-      title: "Task 2",
-      description: "Description 2",
-      status: "In Progress",
-    },
-    {
-      id: 3,
-      title: "Task 3",
-      description: "Description 3",
-      status: "In Progress",
-    },
-    {
-      id: 4,
-      title: "Task 4",
-      description: "Description 4",
-      status: "Completed",
-    },
-    {
-      id: 5,
-      title: "Task 5",
-      description: "Description 5",
-      status: "To Do",
-    },
-    {
-      id: 6,
-      title: "Task 6",
-      description: "Description 6",
-      status: "In Progress",
-    },
-    {
-      id: 7,
-      title: "Task 7",
-      description: "Description 7",
-      status: "Completed",
-    },
-    {
-      id: 8,
-      title: "Task 8",
-      description: "Description 8",
-      status: "In Progress",
-    },
-    {
-      id: 9,
-      title: "Task 9",
-      description: "Description 9",
-      status: "To Do",
-    },
-    {
-      id: 10,
-      title: "Task 10",
-      description: "Description 10",
-      status: "In Progress",
-    },
-    {
-      id: 11,
-      title: "Task 11",
-      description: "Description 11",
-      status: "In Progress",
-    },
-    {
-      id: 12,
-      title: "Task 12",
-      description: "Description 12",
-      status: "Completed",
-    },
-    {
-      id: 13,
-      title: "Task 13",
-      description: "Description 13",
-      status: "In Progress",
-    },
-  ]
+
+  // Add error handling
+  if (error) {
+    return <div>Error loading tasks</div>
+  }
+
+  // Add this function to filter tasks based on activeTab
+  const getFilteredTasks = () => {
+    switch (activeTab) {
+      case "todo":
+        return tasks.filter((task) => task.status === "To Do")
+      case "inProgress":
+        return tasks.filter((task) => task.status === "In Progress")
+      case "completed":
+        return tasks.filter((task) => task.status === "Completed")
+      default:
+        return tasks
+    }
+  }
+
+  // Replace the static taskCounts with a computed version
+  const taskCounts = {
+    all: tasks.length,
+    todo: tasks.filter((task) => task.status === "To Do").length,
+    inProgress: tasks.filter((task) => task.status === "In Progress").length,
+    completed: tasks.filter((task) => task.status === "Completed").length,
+  }
 
   // Helper function to get icon and text based on access level
   const getAccessInfo = (level: AccessLevel) => {
@@ -337,7 +287,7 @@ export default function Todo() {
           </div>
         </div>
         <div className="mt-5 my-5 columns-1 md:columns-3 lg:columns-4 gap-3 py-3">
-          {tasks.map((task) => (
+          {getFilteredTasks().map((task) => (
             // Task Card
             <div
               key={task.id}
@@ -356,42 +306,49 @@ export default function Todo() {
                   )} mb-2`}>
                   {task.status.charAt(0).toUpperCase() + task.status.slice(1)}
                 </span>
-                <button>
-                  <BsThreeDotsVertical />
-                </button>
+                <div className="dropdown dropdown-end">
+                  <button tabIndex={0}>
+                    <BsThreeDotsVertical />
+                  </button>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 dark:bg-dark dark:border-dark-bg border dark:text-white">
+                    <li>
+                      <a className="flex items-center gap-2">
+                        <FiEdit2 size={16} />
+                        Update
+                      </a>
+                    </li>
+                    <li>
+                      <a className="text-red-500 flex items-center gap-2">
+                        <RiDeleteBinLine size={16} />
+                        Delete
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
               {/* Task Body */}
               <div className="flex flex-col border-b border-gray-100 dark:border-dark-border pb-3">
-                <h1 className="text-gray-900 dark:text-white text-lg font-bold">{task.title}</h1>
+                <h1 className="text-gray-900 dark:text-white text-lg font-bold line-clamp-1">
+                  {task.title}
+                </h1>
                 <p className="text-gray-500 dark:text-gray-400 text-sm">{task.description}</p>
               </div>
               <div className="flex justify-between items-center">
                 {/* Avatar group */}
                 <div className="avatar-group -space-x-3 rtl:space-x-reverse">
-                  <div className="avatar">
-                    <div className="w-12">
-                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  {[...Array(task.assignedUser)].map((_, i) => (
+                    <div className="avatar">
+                      <div className="w-12" key={i}>
+                        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="avatar">
-                    <div className="w-12">
-                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                    </div>
-                  </div>
-                  <div className="avatar">
-                    <div className="w-12">
-                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                    </div>
-                  </div>
-                  <div className="avatar">
-                    <div className="w-12">
-                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="flex items-center gap-2">
                   <AiOutlineMessage size={20} />
-                  <span>12</span>
+                  <span>{task.messageCount}</span>
                 </div>
               </div>
             </div>
