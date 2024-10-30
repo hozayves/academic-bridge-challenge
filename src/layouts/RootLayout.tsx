@@ -8,7 +8,7 @@ export const RootLayout: FC = () => {
       <Sidebar />
       <div className="flex flex-col w-full">
         <TopNav />
-        <main className="bg-gray-100 overflow-auto">{<Outlet />}</main>
+        <main className="bg-indigo-50 dark:bg-dark overflow-auto">{<Outlet />}</main>
       </div>
     </div>
   )
