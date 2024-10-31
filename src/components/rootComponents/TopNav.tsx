@@ -23,8 +23,8 @@ export default function TopNav() {
   }, [isDarkMode])
 
   return (
-    <div className="bg-light dark:bg-dark h-16 w-full sticky top-0 flex justify-between md:gap-5 gap-2 items-center p-5 px-2 md:px-5 py-8 text-dark dark:text-light dark:border-b-1 dark:border-dark-border dark:border-b">
-      <div className="rounded-xl flex bg-gray-100 p-2 px-3 w-64 md:w-80 h-9 justify-center items-center dark:bg-dark-bg">
+    <div className="bg-light dark:bg-dark h-16 w-full sticky top-0 flex justify-between md:gap-5 gap-2 items-center px-2 md:px-5 py-2 text-dark dark:text-light dark:border-b-1 dark:border-dark-border dark:border-b z-10">
+      <div className="rounded-xl flex bg-gray-100 py-2 px-3 w-45 md:w-80 h-9 justify-center items-center dark:bg-dark-bg">
         <input
           type="text"
           placeholder="Search"
