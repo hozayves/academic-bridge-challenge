@@ -15,8 +15,8 @@ A todo list application built with React, TypeScript, and Vite as part of the Ac
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd todos-app
+git clone https://github.com/hozayves/academic-bridge-challenge
+cd academic-bridge-challenge
 ```
 
 2. Install dependencies:
