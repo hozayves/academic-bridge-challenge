@@ -28,7 +28,7 @@ export const TaskHeader = ({ access, setAccess }: TaskHeaderProps) => {
 
   return (
     <>
-      <div className="flex justify-between items-center rounded-lg w-full">
+      <div className="flex justify-between items-center rounded-lg w-full pt-3">
         <div className="flex flex-col gap-3">
           {/* Breadcrumb */}
           <div className="breadcrumbs text-xs md:text-sm">
@@ -47,7 +47,7 @@ export const TaskHeader = ({ access, setAccess }: TaskHeaderProps) => {
           </h1>
         </div>
 
-        <div className="flex-col items-end self-start gap-3 h-full hidden md:flex">
+        <div className="flex-col items-end self-start gap-3 h-full hidden md:flex pt-1">
           <p className="font-bold text-gray-900 dark:text-white text-sm">
             {t("date.from", { date: "21 April" })}
           </p>

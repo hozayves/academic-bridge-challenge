@@ -8,6 +8,7 @@ import { CreateTaskModal } from "../components/todo/CreateTaskModal"
 import { UpdateTaskModal } from "../components/todo/UpdateTaskModal"
 import { TaskHeader } from "../components/todo/TaskHeader"
 import { TaskNavigation } from "../components/todo/TaskNavigation"
+import { ViewTaskModal } from "../components/todo/ViewTaskModal"
 
 export default function Todo() {
   const [access, setAccess] = useState<AccessLevel>("limited")
@@ -15,6 +16,7 @@ export default function Todo() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
 
   const tasks = tasksStore((state) => state.tasks as Task[])
   const { isLoading, error } = useGetTodo()
@@ -36,42 +38,60 @@ export default function Todo() {
   if (error) return <div>Error loading tasks</div>
 
   return (
-    <div className="p-2 md:p-5 h-auto bg-indigo-50 dark:bg-dark text-gray-400">
-      <TaskHeader access={access} setAccess={setAccess} />
+    <div className="relative h-screen overflow-hidden">
+      <div className={`transition-all duration-300 h-full flex flex-col`}>
+        <div className="flex-1 overflow-auto p-2 md:px-5 md:py-0 bg-indigo-50 dark:bg-dark">
+          <div className="bg-indigo-50 dark:bg-dark text-gray-400 flex-shrink-0">
+            <TaskHeader access={access} setAccess={setAccess} />
 
-      <TaskNavigation
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        taskCounts={getTaskCounts()}
-        onNewTask={() => setIsModalOpen(true)}
-      />
+            <TaskNavigation
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              taskCounts={getTaskCounts()}
+              onNewTask={() => setIsModalOpen(true)}
+            />
+          </div>
+          <div className="columns-1 md:columns-3 lg:columns-4 gap-3 py-3">
+            {getFilteredTasks(activeTab).map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                onDelete={handleDelete}
+                onUpdate={(task) => {
+                  setSelectedTask(task)
+                  setIsUpdateModalOpen(true)
+                }}
+                onView={(task) => {
+                  setSelectedTask(task)
+                  setIsViewModalOpen(true)
+                }}
+                isDeleting={isDeleting}
+              />
+            ))}
+          </div>
+        </div>
 
-      <div className="mt-5 my-5 columns-1 md:columns-3 lg:columns-4 gap-3 py-3">
-        {getFilteredTasks(activeTab).map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onDelete={handleDelete}
-            onUpdate={(task) => {
-              setSelectedTask(task)
-              setIsUpdateModalOpen(true)
-            }}
-            isDeleting={isDeleting}
-          />
-        ))}
+        <CreateTaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+        <UpdateTaskModal
+          isOpen={isUpdateModalOpen}
+          onClose={() => {
+            setIsUpdateModalOpen(false)
+            setSelectedTask(null)
+          }}
+          task={selectedTask}
+          onUpdate={handleUpdate}
+          isUpdating={isUpdating}
+        />
       </div>
 
-      <CreateTaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
-      <UpdateTaskModal
-        isOpen={isUpdateModalOpen}
+      <ViewTaskModal
+        isOpen={isViewModalOpen}
         onClose={() => {
-          setIsUpdateModalOpen(false)
+          setIsViewModalOpen(false)
           setSelectedTask(null)
         }}
         task={selectedTask}
-        onUpdate={handleUpdate}
-        isUpdating={isUpdating}
       />
     </div>
   )
