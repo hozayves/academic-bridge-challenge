@@ -1,6 +1,6 @@
 import { Task } from "../../types/todo"
 import { MdOutlineKeyboardVoice } from "react-icons/md"
-import imagex from "../../assets/images/taskIMg.jpg"
+import imagex from "../../assets/images/taskImg.jpg"
 import { useState } from "react"
 import { messages, teamMembers } from "../../constants/task"
 
