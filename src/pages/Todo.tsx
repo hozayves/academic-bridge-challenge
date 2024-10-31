@@ -6,19 +6,38 @@ import { IoGridOutline } from "react-icons/io5"
 import { CiGrid2H } from "react-icons/ci"
 import { CiLock } from "react-icons/ci"
 import { MdPublic } from "react-icons/md"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BiSort } from "react-icons/bi"
 import { NavLink } from "react-router-dom"
 import imagex from "../assets/images/erick.jpeg"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { AiOutlineMessage } from "react-icons/ai"
 import { tasksStore } from "../zustand"
-import { useGetTodo, useDeleteTodo } from "../service/index"
+import { useGetTodo, useDeleteTodo, useCreateTodo, useUpdateTodo } from "../hooks/useTodos"
 import { FiEdit2 } from "react-icons/fi"
 import { RiDeleteBinLine } from "react-icons/ri"
 
+// Add this type definition near the top of the file
+type Task = {
+  id: number
+  title: string
+  description?: string
+  status: string
+  assignedUser: number
+  messageCount: number
+}
+
 // Add this type above the component
 type AccessLevel = "limited" | "private" | "public"
+
+// Add this type near the top with other type definitions
+type TaskStatus = "To Do" | "In Progress" | "Completed"
+
+type UpdateTaskPayload = {
+  todo: string
+  completed: boolean
+  status?: TaskStatus
+}
 
 export default function Todo() {
   // Add this state near the top of the component
@@ -28,15 +47,20 @@ export default function Todo() {
   const tasks = tasksStore((state) => state.tasks)
   const { isLoading, error } = useGetTodo() // Add this to trigger the API fetch
   const { mutate: deleteTask, isPending: isDeleting } = useDeleteTodo()
-  // const { mutate: updateTask, isPending: isUpdating } = useUpdateTodo()
+  const { mutate: updateTask, isPending: isUpdating } = useUpdateTodo()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
   const handleDelete = (id: number) => {
     deleteTask(id)
   }
 
-  // const handleUpdate = (id: number, updatedTask: Partial<FormattedTodo>) => {
-  //     updateTask({ id, updatedTodo: updatedTask })
-  // }
+  const handleUpdate = (id: number, updatedTask: UpdateTaskPayload) => {
+    updateTask({ id, updatedTodo: updatedTask })
+    setIsUpdateModalOpen(false)
+    setSelectedTask(null)
+  }
 
   // Add loading state
   if (isLoading) {
@@ -92,6 +116,130 @@ export default function Todo() {
       default:
         return "bg-gray-100 text-gray-800"
     }
+  }
+
+  const CreateTaskModal = () => {
+    const [formData, setFormData] = useState({
+      todo: "",
+      userId: 1,
+      completed: false,
+    })
+
+    const createTodo = useCreateTodo()
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault()
+      await createTodo.mutateAsync(formData)
+      setIsModalOpen(false)
+    }
+
+    return (
+      <dialog className="modal" open={isModalOpen}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Create New Task</h3>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <input
+              type="text"
+              placeholder="Task title"
+              className="input input-bordered w-full"
+              value={formData.todo}
+              onChange={(e) => setFormData({ ...formData, todo: e.target.value })}
+            />
+            <div className="modal-action">
+              <button type="submit" className="btn btn-primary">
+                Create
+              </button>
+              <button type="button" className="btn" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={() => setIsModalOpen(false)}>close</button>
+        </form>
+      </dialog>
+    )
+  }
+
+  const UpdateTaskModal = () => {
+    const [formData, setFormData] = useState({
+      todo: selectedTask?.title || "",
+      completed: selectedTask?.status === "Completed",
+    })
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault()
+      if (selectedTask?.id) {
+        const updatedTask: UpdateTaskPayload = {
+          ...formData,
+          status: formData.completed
+            ? "Completed"
+            : selectedTask.status === "In Progress"
+              ? "In Progress"
+              : "To Do",
+        }
+        await handleUpdate(selectedTask.id, updatedTask)
+      }
+    }
+
+    useEffect(() => {
+      if (selectedTask) {
+        setFormData({
+          todo: selectedTask.title || "",
+          completed: selectedTask.status === "Completed",
+        })
+      }
+    }, [selectedTask])
+
+    return (
+      <dialog className="modal" open={isUpdateModalOpen}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Update Task</h3>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <input
+              type="text"
+              placeholder="Task title"
+              className="input input-bordered w-full"
+              value={formData.todo}
+              onChange={(e) => setFormData({ ...formData, todo: e.target.value })}
+            />
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                className="checkbox"
+                checked={formData.completed}
+                onChange={(e) => setFormData({ ...formData, completed: e.target.checked })}
+              />
+              <span>Mark as completed</span>
+            </div>
+            <div className="modal-action">
+              <button type="submit" className="btn btn-primary" disabled={isUpdating}>
+                {isUpdating ? "Updating..." : "Update"}
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  setIsUpdateModalOpen(false)
+                  setSelectedTask(null)
+                }}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button
+            onClick={() => {
+              setIsUpdateModalOpen(false)
+              setSelectedTask(null)
+            }}>
+            close
+          </button>
+        </form>
+      </dialog>
+    )
   }
 
   return (
@@ -290,7 +438,9 @@ export default function Todo() {
               <BiSort className="rotate-90" />
               <span>Filter & Sort</span>
             </button>
-            <button className="rounded-md border border-gray-300 p-1 md:px-2 flex gap-1 justify-center items-center hover:bg-gray-200 dark:bg-dark-bg hover:dark:text-light dark:border-dark-border dark:border-2 hover:dark:bg-transparent">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="rounded-md border border-gray-300 p-1 md:px-2 flex gap-1 justify-center items-center hover:bg-gray-200 dark:bg-dark-bg hover:dark:text-light dark:border-dark-border dark:border-2 hover:dark:bg-transparent">
               <FaPlus />
               <span>New</span> <span className="hidden md:flex">Task</span>
             </button>
@@ -326,7 +476,13 @@ export default function Todo() {
                     tabIndex={0}
                     className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 dark:bg-dark dark:border-dark-bg border dark:text-white">
                     <li>
-                      <button type="button" className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        className="flex items-center gap-2"
+                        onClick={() => {
+                          setSelectedTask(task)
+                          setIsUpdateModalOpen(true)
+                        }}>
                         <FiEdit2 size={16} />
                         Update
                       </button>
@@ -371,6 +527,8 @@ export default function Todo() {
           ))}
         </div>
       </div>
+      <CreateTaskModal />
+      <UpdateTaskModal />
     </div>
   )
 }
