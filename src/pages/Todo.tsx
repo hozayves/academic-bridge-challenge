@@ -13,7 +13,7 @@ import imagex from "../assets/images/erick.jpeg"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { AiOutlineMessage } from "react-icons/ai"
 import { tasksStore } from "../zustand"
-import { useGetTodo } from "../service/index"
+import { useGetTodo, useDeleteTodo } from "../service/index"
 import { FiEdit2 } from "react-icons/fi"
 import { RiDeleteBinLine } from "react-icons/ri"
 
@@ -27,6 +27,16 @@ export default function Todo() {
   const [activeTab, setActiveTab] = useState("all")
   const tasks = tasksStore((state) => state.tasks)
   const { isLoading, error } = useGetTodo() // Add this to trigger the API fetch
+  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTodo()
+  // const { mutate: updateTask, isPending: isUpdating } = useUpdateTodo()
+
+  const handleDelete = (id: number) => {
+    deleteTask(id)
+  }
+
+  // const handleUpdate = (id: number, updatedTask: Partial<FormattedTodo>) => {
+  //     updateTask({ id, updatedTodo: updatedTask })
+  // }
 
   // Add loading state
   if (isLoading) {
@@ -307,23 +317,29 @@ export default function Todo() {
                   {task.status.charAt(0).toUpperCase() + task.status.slice(1)}
                 </span>
                 <div className="dropdown dropdown-end">
-                  <button tabIndex={0}>
+                  <button
+                    tabIndex={0}
+                    className=" rounded-full p-1 hover:bg-indigo-50 hover:text-dark dark:hover:bg-dark-bg hover:dark:text-white">
                     <BsThreeDotsVertical />
                   </button>
                   <ul
                     tabIndex={0}
                     className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 dark:bg-dark dark:border-dark-bg border dark:text-white">
                     <li>
-                      <a className="flex items-center gap-2">
+                      <button type="button" className="flex items-center gap-2">
                         <FiEdit2 size={16} />
                         Update
-                      </a>
+                      </button>
                     </li>
                     <li>
-                      <a className="text-red-500 flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(task.id)}
+                        disabled={isDeleting}
+                        className="text-red-500 flex items-center gap-2">
                         <RiDeleteBinLine size={16} />
                         Delete
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>
