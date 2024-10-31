@@ -1,7 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { tasksStore } from "../zustand"
 import { showToast } from "../utils/toast"
-import { FormattedTodo } from "../types/todo"
+import { Task } from "../types/todo"
 import { todoApi } from "../service/todoApi"
 
 export const useGetTodo = () => {
@@ -36,7 +36,7 @@ export const useDeleteTodo = () => {
     },
     onSuccess: (deletedId) => {
       deleteTask(deletedId)
-      queryClient.setQueryData(["todos"], (oldData: FormattedTodo[] | undefined) => {
+      queryClient.setQueryData(["todos"], (oldData: Task[] | undefined) => {
         return oldData ? oldData.filter((todo) => todo.id !== deletedId) : []
       })
       showToast("Task deleted successfully!", "info")
@@ -52,13 +52,7 @@ export const useUpdateTodo = () => {
   const updateTask = tasksStore((state) => state.updateTask)
 
   return useMutation({
-    mutationFn: async ({
-      id,
-      updatedTodo,
-    }: {
-      id: number
-      updatedTodo: Partial<FormattedTodo>
-    }) => {
+    mutationFn: async ({ id, updatedTodo }: { id: number; updatedTodo: Partial<Task> }) => {
       const data = await todoApi.updateTodo(id, updatedTodo)
       return { id, updatedTodo: data }
     },
