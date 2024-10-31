@@ -16,7 +16,7 @@ export default function Todo() {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
-  const tasks = tasksStore((state) => state.tasks)
+  const tasks = tasksStore((state) => state.tasks as Task[])
   const { isLoading, error } = useGetTodo()
   const { mutate: deleteTask, isPending: isDeleting } = useDeleteTodo()
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTodo()

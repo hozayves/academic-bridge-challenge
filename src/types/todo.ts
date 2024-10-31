@@ -11,7 +11,7 @@ export interface Task {
   title: string
   description?: string
   status: TaskStatus
-  assignedUser: number
+  assignedUser: number | undefined
   messageCount: number
 }
 
