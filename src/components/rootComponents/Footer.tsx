@@ -17,8 +17,8 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="footer w-full flex p-2 bg-indigo-50 dark:bg-dark z-10 border-t dark:border-gray-800 px-5">
-      <div className="w-full flex justify-center items-center p-4 bg-indigo-50 dark:bg-dark z-10">
+      className="footer w-full flex p-2 bg-indigo-50 dark:bg-dark z-10 border-t dark:border-gray-800 items-center px-5">
+      <div className="w-full flex justify-center items-center p-2 bg-indigo-50 dark:bg-dark z-10">
         <p className="text-sm text-gray-600 dark:text-gray-400">
           © {new Date().getFullYear()} Your App Name. All rights reserved.
         </p>
