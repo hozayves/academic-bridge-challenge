@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Task, UpdateTaskPayload } from "../../types/todo"
+import { useTranslation } from "react-i18next"
 
 interface UpdateTaskModalProps {
   isOpen: boolean
@@ -16,6 +17,7 @@ export const UpdateTaskModal = ({
   onUpdate,
   isUpdating,
 }: UpdateTaskModalProps) => {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     todo: "",
     completed: false,
@@ -48,11 +50,11 @@ export const UpdateTaskModal = ({
   return (
     <dialog className="modal" open={isOpen}>
       <div className="modal-box">
-        <h3 className="font-bold text-lg">Update Task</h3>
+        <h3 className="font-bold text-lg">{t("updateTask.title")}</h3>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <input
             type="text"
-            placeholder="Task title"
+            placeholder={t("updateTask.taskPlaceholder")}
             className="input input-bordered w-full"
             value={formData.todo}
             onChange={(e) => setFormData({ ...formData, todo: e.target.value })}
@@ -64,14 +66,14 @@ export const UpdateTaskModal = ({
               checked={formData.completed}
               onChange={(e) => setFormData({ ...formData, completed: e.target.checked })}
             />
-            <span>Mark as completed</span>
+            <span>{t("updateTask.markCompleted")}</span>
           </div>
           <div className="modal-action">
             <button type="submit" className="btn btn-primary" disabled={isUpdating}>
-              {isUpdating ? "Updating..." : "Update"}
+              {isUpdating ? t("updateTask.updating") : t("updateTask.updateButton")}
             </button>
             <button type="button" className="btn" onClick={onClose}>
-              Cancel
+              {t("updateTask.cancel")}
             </button>
           </div>
         </form>

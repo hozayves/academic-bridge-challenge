@@ -3,6 +3,7 @@ import { MdOutlineNotificationsNone } from "react-icons/md"
 import { FiSearch } from "react-icons/fi"
 import { IoMdSunny } from "react-icons/io"
 import { useState, useEffect } from "react"
+import { useTranslation } from "react-i18next"
 
 export default function TopNav() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -12,6 +13,7 @@ export default function TopNav() {
     }
     return false
   })
+  const { t } = useTranslation()
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light")
@@ -27,7 +29,7 @@ export default function TopNav() {
       <div className="rounded-xl flex bg-gray-100 py-2 px-3 w-45 md:w-80 h-9 justify-center items-center dark:bg-dark-bg">
         <input
           type="text"
-          placeholder="Search"
+          placeholder={t("nav.search")}
           className="bg-gray-100 flex-1 outline-none text-gray-600 dark:bg-dark-bg dark:text-dark-text"
         />
         <FiSearch size={20} />

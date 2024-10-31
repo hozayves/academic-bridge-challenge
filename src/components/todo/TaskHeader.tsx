@@ -4,23 +4,25 @@ import { IoIosArrowDown } from "react-icons/io"
 import { FaPlus } from "react-icons/fa"
 import { MdPublic } from "react-icons/md"
 import { CiGrid2H } from "react-icons/ci"
+import { useTranslation } from "react-i18next"
 
 type AccessLevel = "limited" | "private" | "public"
-
 interface TaskHeaderProps {
   access: AccessLevel
   setAccess: (access: AccessLevel) => void
 }
 
 export const TaskHeader = ({ access, setAccess }: TaskHeaderProps) => {
+  const { t } = useTranslation()
+
   const getAccessInfo = (level: AccessLevel) => {
     switch (level) {
       case "limited":
-        return { icon: <CiUnlock size={20} />, text: "Limited access" }
+        return { icon: <CiUnlock size={20} />, text: t("access.limited") }
       case "private":
-        return { icon: <CiLock size={20} />, text: "Private" }
+        return { icon: <CiLock size={20} />, text: t("access.private") }
       case "public":
-        return { icon: <MdPublic size={20} />, text: "Public" }
+        return { icon: <MdPublic size={20} />, text: t("access.public") }
     }
   }
 
@@ -32,24 +34,26 @@ export const TaskHeader = ({ access, setAccess }: TaskHeaderProps) => {
           <div className="breadcrumbs text-xs md:text-sm">
             <ul>
               <li>
-                <a>Workspace</a>
+                <a>{t("breadcrumb.workspace")}</a>
               </li>
               <li>
-                <a>Creative</a>
+                <a>{t("breadcrumb.creative")}</a>
               </li>
-              <li className="text-gray-900 dark:text-white">Creative Website</li>
+              <li className="text-gray-900 dark:text-white">{t("breadcrumb.creativeWebsite")}</li>
             </ul>
           </div>
           <h1 className="text-gray-900 dark:text-white md:text-4xl text-2xl font-bold">
-            Website Design
+            {t("header.websiteDesign")}
           </h1>
         </div>
 
         <div className="flex-col items-end self-start gap-3 h-full hidden md:flex">
-          <p className="font-bold text-gray-900 dark:text-white text-sm">From 21 April</p>
+          <p className="font-bold text-gray-900 dark:text-white text-sm">
+            {t("date.from", { date: "21 April" })}
+          </p>
           <span className="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500"></div>
-            Updated 12 min ago
+            {t("status.updated", { time: "12 min" })}
           </span>
         </div>
       </div>
@@ -70,19 +74,19 @@ export const TaskHeader = ({ access, setAccess }: TaskHeaderProps) => {
               <li onClick={() => setAccess("private")}>
                 <a className={access === "private" ? "active bg-indigo-100 dark:bg-dark-bg" : ""}>
                   <CiLock />
-                  Private
+                  {t("access.private")}
                 </a>
               </li>
               <li onClick={() => setAccess("public")}>
                 <a className={access === "public" ? "active bg-indigo-100 dark:bg-dark-bg" : ""}>
                   <MdPublic />
-                  Public
+                  {t("access.public")}
                 </a>
               </li>
               <li onClick={() => setAccess("limited")}>
                 <a className={access === "limited" ? "active bg-indigo-100 dark:bg-dark-bg" : ""}>
                   <CiUnlock />
-                  Limited
+                  {t("access.limited")}
                 </a>
               </li>
             </ul>
@@ -124,7 +128,7 @@ export const TaskHeader = ({ access, setAccess }: TaskHeaderProps) => {
           <button className="flex items-center gap-2 relative group">
             <IoLinkSharp size={18} className="rotate-45 h-6 w-6 md:h-5 md:w-5" />
             <div className="absolute hidden md:flex invisible group-hover:visible -top-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-indigo-600 text-white text-sm rounded whitespace-nowrap after:content-[''] after:absolute after:left-1/2 after:-translate-x-1/2 after:top-full after:border-4 after:border-transparent after:border-t-indigo-600">
-              Copy link
+              {t("actions.copyLink")}
             </div>
           </button>
           <div className="flex items-center gap-2 border-l border-gray-300 dark:border-dark-border px-2">

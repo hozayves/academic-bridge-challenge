@@ -4,6 +4,7 @@ import { FiEdit2 } from "react-icons/fi"
 import { RiDeleteBinLine } from "react-icons/ri"
 import { AiOutlineMessage } from "react-icons/ai"
 import imagex from "../../assets/images/erick.jpeg"
+import { useTranslation } from "react-i18next"
 
 interface TaskCardProps {
   task: Task
@@ -13,6 +14,7 @@ interface TaskCardProps {
 }
 
 export const TaskCard = ({ task, onDelete, onUpdate, isDeleting }: TaskCardProps) => {
+  const { t } = useTranslation()
   const getStatusColor = (status: string) => {
     switch (status) {
       case "To Do":
@@ -50,7 +52,7 @@ export const TaskCard = ({ task, onDelete, onUpdate, isDeleting }: TaskCardProps
             <li>
               <button onClick={() => onUpdate(task)} className="flex items-center gap-2">
                 <FiEdit2 size={16} />
-                Update
+                {t("actionx.update")}
               </button>
             </li>
             <li>
@@ -59,7 +61,7 @@ export const TaskCard = ({ task, onDelete, onUpdate, isDeleting }: TaskCardProps
                 disabled={isDeleting}
                 className="text-red-500 flex items-center gap-2">
                 <RiDeleteBinLine size={16} />
-                Delete
+                {t("actionx.delete")}
               </button>
             </li>
           </ul>

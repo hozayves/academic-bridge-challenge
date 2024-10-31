@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "search": "Search"
+  },
+  "access": {
+    "limited": "Limited access",
+    "private": "Private",
+    "public": "Public"
+  },
+  "breadcrumb": {
+    "workspace": "Workspace",
+    "creative": "Creative",
+    "creativeWebsite": "Creative Website"
+  },
+  "header": {
+    "websiteDesign": "Website Design"
+  },
+  "date": {
+    "from": "From {{date}}"
+  },
+  "status": {
+    "updated": "Updated {{time}} ago"
+  },
+  "actions": {
+    "copyLink": "Copy link"
+  },
+  "todo": {
+    "allTasks": "All Tasks",
+    "toDo": "To Do",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "filterAndSort": "Filter & Sort",
+    "new": "New",
+    "task": "Task"
+  },
+  "actionx": {
+    "update": "Update",
+    "delete": "Delete"
+  },
+  "updateTask": {
+    "title": "Update Task",
+    "taskPlaceholder": "Task title",
+    "markCompleted": "Mark as completed",
+    "updateButton": "Update",
+    "updating": "Updating...",
+    "cancel": "Cancel",
+    "close": "close"
+  },
+  "createTask": {
+    "title": "Create New Task",
+    "create": "Create",
+    "cancel": "Cancel"
+  }
+}

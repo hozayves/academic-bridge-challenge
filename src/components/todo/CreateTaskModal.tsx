@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useCreateTodo } from "../../hooks/useTodos"
+import { useTranslation } from "react-i18next"
 
 interface CreateTaskModalProps {
   isOpen: boolean
@@ -7,6 +8,7 @@ interface CreateTaskModalProps {
 }
 
 export const CreateTaskModal = ({ isOpen, onClose }: CreateTaskModalProps) => {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     todo: "",
     userId: 1,
@@ -24,7 +26,7 @@ export const CreateTaskModal = ({ isOpen, onClose }: CreateTaskModalProps) => {
   return (
     <dialog className="modal" open={isOpen}>
       <div className="modal-box">
-        <h3 className="font-bold text-lg">Create New Task</h3>
+        <h3 className="font-bold text-lg">{t("createTask.title")}</h3>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <input
             type="text"
@@ -35,10 +37,10 @@ export const CreateTaskModal = ({ isOpen, onClose }: CreateTaskModalProps) => {
           />
           <div className="modal-action">
             <button type="submit" className="btn btn-primary">
-              Create
+              {t("createTask.create")}
             </button>
             <button type="button" className="btn" onClick={onClose}>
-              Cancel
+              {t("updateTask.cancel")}
             </button>
           </div>
         </form>

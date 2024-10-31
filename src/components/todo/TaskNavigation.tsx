@@ -2,6 +2,7 @@ import { TaskCounts } from "../../types/todo"
 import { NavLink } from "react-router-dom"
 import { BiSort } from "react-icons/bi"
 import { FaPlus } from "react-icons/fa6"
+import { useTranslation } from "react-i18next"
 
 interface TaskNavigationProps {
   activeTab: string
@@ -16,6 +17,8 @@ export const TaskNavigation = ({
   taskCounts,
   onNewTask,
 }: TaskNavigationProps) => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex justify-between gap-0 md:gap-0 bg-white dark:bg-dark-bg rounded-xl md:p-4 px-1 py-2 mt-5">
       <div className="flex md:gap-2 gap-1 items-center">
@@ -29,7 +32,7 @@ export const TaskNavigation = ({
                             ? "text-indigo-600 dark:text-indigo-400 after:content-[''] after:absolute after:bottom-[-16px] after:left-0 after:w-full after:h-[5px] after:bg-indigo-600 after:rounded-t-full"
                             : "text-gray-500 dark:text-gray-400"
                         }`}>
-          All Tasks
+          {t("todo.allTasks")}
           <span
             className={`px-1 py-[2px] hidden md:flex rounded-md leading-none 
                         ${
@@ -51,7 +54,7 @@ export const TaskNavigation = ({
                             ? "text-indigo-600 dark:text-indigo-400 after:content-[''] after:absolute after:bottom-[-16px] after:left-0 after:w-full after:h-[5px] after:bg-indigo-600 after:rounded-t-full"
                             : "text-gray-500 dark:text-gray-400"
                         }`}>
-          To Do
+          {t("todo.toDo")}
           <span
             className={`px-1 py-[2px] hidden md:flex rounded-md leading-none 
                         ${
@@ -73,7 +76,7 @@ export const TaskNavigation = ({
                             ? "text-indigo-600 dark:text-indigo-400 after:content-[''] after:absolute after:bottom-[-16px] after:left-0 after:w-full after:h-[5px] after:bg-indigo-600 after:rounded-t-full"
                             : "text-gray-500 dark:text-gray-400"
                         }`}>
-          In Progress
+          {t("todo.inProgress")}
           <span
             className={`px-1 py-[2px] hidden md:flex rounded-md leading-none 
                         ${
@@ -95,7 +98,7 @@ export const TaskNavigation = ({
                             ? "text-indigo-600 dark:text-indigo-400 after:content-[''] after:absolute after:bottom-[-16px] after:left-0 after:w-full after:h-[5px] after:bg-indigo-600 after:rounded-t-full"
                             : "text-gray-500 dark:text-gray-400"
                         }`}>
-          Completed
+          {t("todo.completed")}
           <span
             className={`px-1 py-[2px] hidden md:flex rounded-md leading-none 
                         ${
@@ -111,14 +114,14 @@ export const TaskNavigation = ({
       <div className="flex gap-4 md:text-sm text-xs md:font-medium">
         <button className="rounded-md md:flex hidden border border-gray-300 p-1 px-2 gap-1 justify-center items-center hover:bg-gray-200 dark:bg-dark-bg hover:dark:text-light dark:border-dark-border dark:border-2 hover:dark:bg-transparent">
           <BiSort className="rotate-90" />
-          <span>Filter & Sort</span>
+          <span>{t("todo.filterAndSort")}</span>
         </button>
         <button
           onClick={onNewTask}
           className="rounded-md border border-gray-300 p-1 md:px-2 flex gap-1 justify-center items-center hover:bg-gray-200 dark:bg-dark-bg hover:dark:text-light dark:border-dark-border dark:border-2 hover:dark:bg-transparent">
           <FaPlus />
-          <span>New</span>
-          <span className="hidden md:flex">Task</span>
+          <span>{t("todo.new")}</span>
+          <span className="hidden md:flex">{t("todo.task")}</span>
         </button>
       </div>
     </div>
