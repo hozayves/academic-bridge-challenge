@@ -31,3 +31,23 @@ export interface TaskCounts {
   inProgress: number
   completed: number
 }
+export interface TaskCardProps {
+  task: Task
+  onDelete: (id: number) => void
+  onUpdate: (task: Task) => void
+  onView: (task: Task) => void
+  isDeleting: boolean
+}
+export interface TaskNavigationProps {
+  activeTab: string
+  setActiveTab: (tab: string) => void
+  taskCounts: TaskCounts
+  onNewTask: () => void
+}
+export interface UpdateTaskModalProps {
+  isOpen: boolean
+  onClose: () => void
+  task: Task | null
+  onUpdate: (id: number, updatedTask: UpdateTaskPayload) => void
+  isUpdating: boolean
+}

@@ -1,18 +1,10 @@
-import { Task } from "../../types/todo"
+import { TaskCardProps } from "../../types/todo"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FiEdit2 } from "react-icons/fi"
 import { RiDeleteBinLine } from "react-icons/ri"
 import { AiOutlineMessage } from "react-icons/ai"
 import imagex from "../../assets/images/taskImg.jpg"
 import { useTranslation } from "react-i18next"
-
-interface TaskCardProps {
-  task: Task
-  onDelete: (id: number) => void
-  onUpdate: (task: Task) => void
-  onView: (task: Task) => void
-  isDeleting: boolean
-}
 
 export const TaskCard = ({ task, onDelete, onUpdate, onView, isDeleting }: TaskCardProps) => {
   const { t } = useTranslation()

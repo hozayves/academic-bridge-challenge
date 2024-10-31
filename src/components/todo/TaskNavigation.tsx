@@ -1,15 +1,8 @@
-import { TaskCounts } from "../../types/todo"
+import { TaskNavigationProps } from "../../types/todo"
 import { NavLink } from "react-router-dom"
 import { BiSort } from "react-icons/bi"
 import { FaPlus } from "react-icons/fa6"
 import { useTranslation } from "react-i18next"
-
-interface TaskNavigationProps {
-  activeTab: string
-  setActiveTab: (tab: string) => void
-  taskCounts: TaskCounts
-  onNewTask: () => void
-}
 
 export const TaskNavigation = ({
   activeTab,

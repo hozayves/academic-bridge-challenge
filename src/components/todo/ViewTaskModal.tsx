@@ -2,6 +2,7 @@ import { Task } from "../../types/todo"
 import { MdOutlineKeyboardVoice } from "react-icons/md"
 import imagex from "../../assets/images/taskIMg.jpg"
 import { useState } from "react"
+import { messages, teamMembers } from "../../constants/task"
 
 interface ViewTaskModalProps {
   isOpen: boolean
@@ -11,30 +12,6 @@ interface ViewTaskModalProps {
 
 export const ViewTaskModal = ({ isOpen, onClose, task }: ViewTaskModalProps) => {
   const [message, setMessage] = useState("")
-
-  const teamMembers = [
-    { id: 1, image: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" },
-    { id: 2, image: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" },
-    { id: 3, image: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" },
-  ]
-
-  const messages = [
-    {
-      id: 1,
-      user: "John Doe",
-      avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
-      time: "12:33 AM",
-      content: "This task needs to be completed ASAP",
-    },
-    {
-      id: 2,
-      user: "Jane Smith",
-      avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
-      time: "12:35 AM",
-      content: "I'm working on it right now",
-      align: "right",
-    },
-  ]
 
   if (!isOpen || !task) return null
 

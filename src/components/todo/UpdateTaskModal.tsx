@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react"
-import { Task, UpdateTaskPayload } from "../../types/todo"
+import { UpdateTaskPayload, UpdateTaskModalProps } from "../../types/todo"
 import { useTranslation } from "react-i18next"
-
-interface UpdateTaskModalProps {
-  isOpen: boolean
-  onClose: () => void
-  task: Task | null
-  onUpdate: (id: number, updatedTask: UpdateTaskPayload) => void
-  isUpdating: boolean
-}
 
 export const UpdateTaskModal = ({
   isOpen,
