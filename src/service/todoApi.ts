@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ApiTodo, FormattedTodo } from "../types/todo"
+import { ApiTodo, Task } from "../types/todo"
 import { getRandomStatus } from "../utils/status"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
@@ -24,7 +24,7 @@ export const todoApi = {
     return data
   },
 
-  updateTodo: async (id: number, updatedTodo: Partial<FormattedTodo>) => {
+  updateTodo: async (id: number, updatedTodo: Partial<Task>) => {
     const { data } = await axios.put(`${API_BASE_URL}/todos/${id}`, updatedTodo)
     return data
   },
