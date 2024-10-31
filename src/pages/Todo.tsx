@@ -9,6 +9,7 @@ import { UpdateTaskModal } from "../components/todo/UpdateTaskModal"
 import { TaskHeader } from "../components/todo/TaskHeader"
 import { TaskNavigation } from "../components/todo/TaskNavigation"
 import { ViewTaskModal } from "../components/todo/ViewTaskModal"
+import Skeletonx from "../components/todo/Skeletonx"
 
 export default function Todo() {
   const [access, setAccess] = useState<AccessLevel>("limited")
@@ -34,7 +35,7 @@ export default function Todo() {
     setSelectedTask(null)
   }
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Skeletonx />
   if (error) return <div>Error loading tasks</div>
 
   return (
