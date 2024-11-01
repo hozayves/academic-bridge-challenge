@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css"
 
 function Skeletonx() {
   return (
-    <div className="relative h-screen overflow-hidden">
+    <div className="relative h-screen w-full overflow-hidden">
       <div className={`transition-all duration-300 h-full flex flex-col`}>
         <div className="flex-1 overflow-auto p-2 md:px-5 md:py-0 bg-indigo-50 dark:bg-dark">
           <div className="bg-indigo-50 dark:bg-dark text-gray-400 flex-shrink-0">
@@ -12,13 +12,13 @@ function Skeletonx() {
                 <div className="breadcrumbs text-xs md:text-sm">
                   <ul>
                     <li>
-                      <Skeleton height={20} width={100} />
+                      <Skeleton height={20} width={50} />
                     </li>
                     <li>
-                      <Skeleton height={20} width={100} />
+                      <Skeleton height={20} width={50} />
                     </li>
                     <li>
-                      <Skeleton height={20} width={100} />
+                      <Skeleton height={20} width={50} />
                     </li>
                   </ul>
                 </div>
@@ -73,19 +73,19 @@ function Skeletonx() {
               </div>
             </div>
           </div>
-          <div className="flex justify-between gap-0 md:gap-0 bg-white dark:bg-dark-bg rounded-xl md:p-4 px-1 py-2 mt-5">
-            <div className="flex md:gap-2 gap-1 items-center">
+          <div className="flex justify-between gap-0 md:gap-0 bg-white dark:bg-dark-bg rounded-xl md:p-4 px-2 py-2 mt-5">
+            <div className="flex md:gap-2 gap-3 items-center justify-between">
               <div>
-                <Skeleton width={100} height={30} />
+                <Skeleton width={90} height={30} />
               </div>
               <div>
-                <Skeleton width={100} height={30} />
+                <Skeleton width={90} height={30} />
               </div>
               <div>
-                <Skeleton width={100} height={30} />
+                <Skeleton width={90} height={30} />
               </div>
-              <div>
-                <Skeleton width={100} height={30} />
+              <div className="hidden md:flex">
+                <Skeleton width={90} height={30} />
               </div>
             </div>
           </div>

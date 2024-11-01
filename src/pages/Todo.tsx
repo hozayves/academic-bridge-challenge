@@ -36,7 +36,7 @@ export default function Todo() {
   }
 
   if (isLoading) return <Skeletonx />
-  if (error) return <div>Error loading tasks</div>
+  if (error) return <div className="text-center py-5">Error loading tasks</div>
 
   return (
     <div className="relative h-screen overflow-hidden">
