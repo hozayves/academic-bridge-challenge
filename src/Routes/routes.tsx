@@ -9,9 +9,9 @@ export const routes = createBrowserRouter([
       {
         index: true,
         element: (
-          <div className="text-3xl font-bold mt-4 items-center gap-5 text-black flex flex-col dark:text-white  ">
+          <div className="md:text-3xl text-sm font-base md:font-bold mt-4 items-center gap-5 text-black flex flex-col dark:text-white  ">
             <span>Welcome to Todo App challenge</span>
-            <a href="/todo" className="btn w-32">
+            <a href="/todo" className="btn w-32 text-sm md:text-lg">
               Go to Tasks
             </a>
           </div>
