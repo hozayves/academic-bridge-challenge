@@ -11,7 +11,7 @@ export const routes = createBrowserRouter([
         element: (
           <div className="md:text-3xl text-sm font-base md:font-bold mt-4 items-center gap-5 text-black flex flex-col dark:text-white  ">
             <span>Welcome to Todo App challenge</span>
-            <Link to="/todo" className="btn w-32 text-sm md:text-lg">
+            <Link to="/todo" className="btn w-32 text-sm md:text-base">
               Go to Tasks
             </Link>
           </div>
