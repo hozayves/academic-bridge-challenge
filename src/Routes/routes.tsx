@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter, Link } from "react-router-dom"
 import { rootLayout } from "../layouts"
 import Todo from "../pages/Todo"
 export const routes = createBrowserRouter([
@@ -11,9 +11,9 @@ export const routes = createBrowserRouter([
         element: (
           <div className="md:text-3xl text-sm font-base md:font-bold mt-4 items-center gap-5 text-black flex flex-col dark:text-white  ">
             <span>Welcome to Todo App challenge</span>
-            <a href="/todo" className="btn w-32 text-sm md:text-lg">
+            <Link to="/todo" className="btn w-32 text-sm md:text-lg">
               Go to Tasks
-            </a>
+            </Link>
           </div>
         ),
       },
