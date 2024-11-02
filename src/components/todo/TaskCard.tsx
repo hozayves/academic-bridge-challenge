@@ -32,7 +32,7 @@ export const TaskCard = ({ task, onDelete, onUpdate, onView, isDeleting }: TaskC
       )}
       <div className="flex justify-between items-center">
         <span
-          className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(task.status)} mb-2`}>
+          className={`inline-block px-2 py-1 rounded-lg text-xs font-medium ${getStatusColor(task.status)} mb-2`}>
           {task.status}
         </span>
         <div className="dropdown dropdown-end" onClick={(e) => e.stopPropagation()}>
